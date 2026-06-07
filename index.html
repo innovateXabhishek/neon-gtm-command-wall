@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEON AI — Command WALL: Revenue</title>
+<style>
+  :root{
+    --bg:#070b14; --panel:#0d1422; --panel2:#111a2e; --line:#1d2a44;
+    --neon:#00e5ff; --neon2:#7c5cff; --green:#1fe086; --amber:#ffc24b; --red:#ff5d6c;
+    --txt:#e8eefc; --mut:#8a9cc4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',Inter,system-ui,Arial,sans-serif;background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,.18), transparent),
+    radial-gradient(900px 500px at -10% 10%, rgba(0,229,255,.12), transparent),
+    var(--bg);color:var(--txt);}
+  .wrap{max-width:1320px;margin:0 auto;padding:22px 26px 60px}
+  header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--neon2));
+    display:grid;place-items:center;font-weight:800;color:#04121a;font-size:20px;
+    box-shadow:0 0 26px rgba(0,229,255,.5)}
+  h1{font-size:21px;margin:0;letter-spacing:.3px}
+  .sub{color:var(--mut);font-size:12.5px;margin-top:3px}
+  .live{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--green);
+    background:rgba(31,224,134,.08);border:1px solid rgba(31,224,134,.3);padding:7px 12px;border-radius:30px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}
+  .kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:16px}
+  .kpi .lbl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+  .kpi .val{font-size:26px;font-weight:800;margin-top:6px}
+  .kpi .delta{font-size:11.5px;margin-top:5px;color:var(--green)}
+  .kpi.alt .val{color:var(--neon)} .kpi.alt2 .val{color:var(--neon2)}
+  .grid{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;margin-bottom:18px}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:16px;padding:18px}
+  .card h2{font-size:14px;margin:0 0 4px;letter-spacing:.4px}
+  .card .cap{color:var(--mut);font-size:11.5px;margin-bottom:14px}
+  /* flywheel */
+  .fly{display:grid;grid-template-columns:1fr;gap:0;place-items:center;min-height:300px;position:relative}
+  svg{width:100%;max-width:520px;height:auto}
+  .nodeT{font:600 12px Segoe UI;fill:var(--txt)} .nodeS{font:11px Segoe UI;fill:var(--mut)}
+  /* signal feed */
+  .feed{height:330px;overflow:hidden;position:relative}
+  .row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+    padding:11px 12px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;
+    background:rgba(255,255,255,.015);animation:slide .5s ease}
+  @keyframes slide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+  .row .co{font-weight:700;font-size:13px} .row .sig{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .score{font-weight:800;font-size:15px;padding:4px 10px;border-radius:9px;min-width:46px;text-align:center}
+  .s-hi{color:var(--green);background:rgba(31,224,134,.12);border:1px solid rgba(31,224,134,.35)}
+  .s-md{color:var(--amber);background:rgba(255,194,75,.1);border:1px solid rgba(255,194,75,.32)}
+  .s-lo{color:var(--mut);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+  .route{font-size:10.5px;color:var(--neon);margin-top:4px;letter-spacing:.3px}
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .col{background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:12px;padding:13px}
+  .col h3{font-size:12px;margin:0 0 3px} .col .ct{font-size:10.5px;color:var(--mut);margin-bottom:11px}
+  .deal{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 10px;margin-bottom:8px}
+  .deal .n{font-size:12px;font-weight:600} .deal .v{font-size:11px;color:var(--green);margin-top:3px}
+  .bar{height:5px;border-radius:4px;background:var(--line);margin-top:7px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--neon),var(--neon2))}
+  .tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:6px;margin-top:6px;
+    background:rgba(124,92,255,.12);color:#b9a9ff;border:1px solid rgba(124,92,255,.3)}
+  /* claude card */
+  .draft{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:14px;font-size:12.5px;line-height:1.55}
+  .draft .meta{color:var(--mut);font-size:11px;border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:9px}
+  .hl{color:var(--neon);font-weight:600}
+  .btn{cursor:pointer;border:1px solid var(--neon);color:var(--neon);background:transparent;
+    padding:8px 14px;border-radius:9px;font-size:12px;font-weight:600;margin-top:12px;transition:.2s}
+  .btn:hover{background:var(--neon);color:#04121a;box-shadow:0 0 18px rgba(0,229,255,.5)}
+  footer{margin-top:26px;text-align:center;color:var(--mut);font-size:11.5px}
+  .flex{display:flex;gap:18px} .flex>div{flex:1}
+  @media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+
+  /* ---- welcome splash ---- */
+  #splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;text-align:center;
+    background:radial-gradient(900px 600px at 50% 30%, rgba(124,92,255,.22), transparent), var(--bg);
+    transition:opacity .8s ease, visibility .8s ease}
+  #splash.gone{opacity:0;visibility:hidden}
+  .splash-in{animation:rise 1s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  .biglogo{width:88px;height:88px;border-radius:22px;margin:0 auto 26px;
+    background:linear-gradient(135deg,var(--neon),var(--neon2));display:grid;place-items:center;
+    font-weight:800;color:#04121a;font-size:42px;box-shadow:0 0 60px rgba(0,229,255,.6);
+    animation:float 3s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  #splash h1{font-size:46px;margin:0 0 8px;letter-spacing:.5px;
+    background:linear-gradient(90deg,#fff,var(--neon));-webkit-background-clip:text;background-clip:text;color:transparent}
+  #splash .tag{color:var(--mut);font-size:15px;max-width:560px;margin:0 auto 8px;line-height:1.6}
+  #splash .by{color:var(--neon2);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:34px}
+  .enter{cursor:pointer;border:none;font-size:16px;font-weight:700;color:#04121a;letter-spacing:.4px;
+    padding:16px 38px;border-radius:14px;background:linear-gradient(135deg,var(--neon),var(--neon2));
+    box-shadow:0 0 40px rgba(0,229,255,.55);transition:transform .18s, box-shadow .18s}
+  .enter:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 60px rgba(124,92,255,.7)}
+  .enter:active{transform:scale(.97)}
+  .splash-foot{position:absolute;bottom:26px;left:0;right:0;color:var(--mut);font-size:12px}
+  .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:22px auto 0;max-width:600px}
+  .chip{font-size:11.5px;color:var(--neon);border:1px solid rgba(0,229,255,.3);
+    background:rgba(0,229,255,.06);padding:6px 13px;border-radius:30px}
+
+  /* ---- watermark ---- */
+  .watermark{position:fixed;bottom:14px;right:16px;z-index:50;font-size:11px;color:var(--mut);
+    background:rgba(13,20,34,.7);border:1px solid var(--line);padding:6px 12px;border-radius:30px;
+    backdrop-filter:blur(6px);letter-spacing:.4px;display:flex;align-items:center;gap:7px}
+  .watermark b{color:var(--neon)}
+  .wm-dot{width:6px;height:6px;border-radius:50%;background:var(--neon2);box-shadow:0 0 8px var(--neon2)}
+
+  /* ---- control bar widgets ---- */
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;
+    padding:12px 14px;background:linear-gradient(180deg,var(--panel2),var(--panel));
+    border:1px solid var(--line);border-radius:14px}
+  .ctrl{cursor:pointer;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--txt);
+    font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;transition:.18s;display:flex;align-items:center;gap:7px}
+  .ctrl:hover{border-color:var(--neon);color:var(--neon)}
+  .ctrl.on{border-color:var(--green);color:var(--green);background:rgba(31,224,134,.08)}
+  .ctrl.primary{border-color:var(--neon2);color:#cfc4ff;background:rgba(124,92,255,.1)}
+  .ctrl.primary:hover{background:var(--neon2);color:#fff}
+  .clock{margin-left:auto;font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+  .clock b{color:var(--neon)}
+  .toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(20px);z-index:60;
+    background:var(--panel2);border:1px solid var(--neon);color:var(--txt);padding:12px 20px;border-radius:12px;
+    font-size:13px;box-shadow:0 8px 30px rgba(0,0,0,.5);opacity:0;transition:.35s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ===== WELCOME SPLASH ===== -->
+<div id="splash">
+  <div class="splash-in">
+    <div class="biglogo">N</div>
+    <h1>Welcome to GTM Neon</h1>
+    <div class="tag">A self-driving Go-To-Market engine for Neon AI — built as a Command WALL for Revenue. Signals in, qualified pipeline out, every KPI on one wall.</div>
+    <div class="by">⚡ Built by Abhishek S</div>
+    <button class="enter" onclick="enterApp()">Enter the Command WALL →</button>
+    <div class="chips">
+      <span class="chip">n8n automation</span>
+      <span class="chip">Claude / Claude Code</span>
+      <span class="chip">3 revenue streams · 1 flywheel</span>
+      <span class="chip">Live signal scoring</span>
+    </div>
+  </div>
+  <div class="splash-foot">Press <b style="color:var(--neon)">Enter</b> or click the button · Best viewed full-screen</div>
+</div>
+
+<!-- ===== WATERMARK ===== -->
+<div class="watermark"><span class="wm-dot"></span>Built by <b>Abhishek&nbsp;S</b> · GTM Engineer</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">N</div>
+      <div>
+        <h1>NEON AI — Command WALL: <span style="color:var(--neon)">Revenue</span></h1>
+        <div class="sub">Self-driving GTM engine · n8n + Claude Code · built by the GTM Engineer, dogfooding the product</div>
+      </div>
+    </div>
+    <div class="live"><span class="dot"></span> ENGINE LIVE · signals streaming</div>
+  </header>
+
+  <!-- CONTROL BAR -->
+  <div class="controls">
+    <button class="ctrl on" id="btnFeed" onclick="toggleFeed()">⏸ Pause engine</button>
+    <button class="ctrl primary" onclick="runScenario()">⚡ Run hot-lead scenario</button>
+    <button class="ctrl" onclick="regen()">↻ New Claude draft</button>
+    <button class="ctrl" onclick="boostKpis()">📈 Simulate a week</button>
+    <div class="clock">⏱ Engine uptime <b id="clock">00:00:00</b></div>
+  </div>
+
+  <!-- KPI WALL -->
+  <div class="kpis">
+    <div class="kpi"><div class="lbl">Signals ingested</div><div class="val" id="k1">0</div><div class="delta">▲ auto, 24/7</div></div>
+    <div class="kpi alt"><div class="lbl">Qualified leads</div><div class="val" id="k2">0</div><div class="delta">▲ scored by Claude</div></div>
+    <div class="kpi"><div class="lbl">Workshops booked</div><div class="val" id="k3">0</div><div class="delta">▲ the wedge</div></div>
+    <div class="kpi alt2"><div class="lbl">Pipeline value</div><div class="val" id="k4">£0</div><div class="delta">▲ across 3 streams</div></div>
+    <div class="kpi"><div class="lbl">Finance WALL MRR</div><div class="val" id="k5">£0</div><div class="delta">▲ recurring, billed Q-adv</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- FLYWHEEL -->
+    <div class="card">
+      <h2>The Revenue Flywheel</h2>
+      <div class="cap">Workshops are the wedge → every workshop emits a structured Workflow Pain Map → that fuels SI & Managed Services and the WALL deployments → recurring MRR funds more demand-gen.</div>
+      <div class="fly">
+        <svg viewBox="0 0 520 320">
+          <defs>
+            <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#7c5cff"/>
+            </marker>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#7c5cff"/></linearGradient>
+          </defs>
+          <circle cx="260" cy="160" r="118" fill="none" stroke="#1d2a44" stroke-width="1.5" stroke-dasharray="4 6"/>
+          <!-- arcs -->
+          <path d="M 360 95 A 118 118 0 0 1 360 225" fill="none" stroke="url(#g1)" stroke-width="2.5" marker-end="url(#arr)"/>
+          <path d="M 300 270 A 118 118 0 0 1 160 250" fill="none" stroke="url(#g1)" stroke-width="2.5" marker-end="url(#arr)"/>
+          <path d="M 150 70 A 118 118 0 0 1 300 50" fill="none" stroke="url(#g1)" stroke-width="2.5" marker-end="url(#arr)"/>
+          <!-- nodes -->
+          <g>
+            <circle cx="260" cy="50" r="40" fill="#111a2e" stroke="#00e5ff" stroke-width="1.5"/>
+            <text x="260" y="46" text-anchor="middle" class="nodeT">Workshops</text>
+            <text x="260" y="62" text-anchor="middle" class="nodeS">£750–1,000 · wedge</text>
+          </g>
+          <g>
+            <circle cx="385" cy="215" r="42" fill="#111a2e" stroke="#7c5cff" stroke-width="1.5"/>
+            <text x="385" y="208" text-anchor="middle" class="nodeT">SI &amp; Managed</text>
+            <text x="385" y="223" text-anchor="middle" class="nodeS">Claude Code</text>
+            <text x="385" y="237" text-anchor="middle" class="nodeS">per engagement</text>
+          </g>
+          <g>
+            <circle cx="135" cy="215" r="42" fill="#111a2e" stroke="#1fe086" stroke-width="1.5"/>
+            <text x="135" y="208" text-anchor="middle" class="nodeT">Command WALL</text>
+            <text x="135" y="223" text-anchor="middle" class="nodeS">Finance £350/mo</text>
+            <text x="135" y="237" text-anchor="middle" class="nodeS">Ops £500/mo · MRR</text>
+          </g>
+          <circle cx="260" cy="160" r="6" fill="#00e5ff"/>
+          <text x="260" y="150" text-anchor="middle" class="nodeS">Pain Map data</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- LIVE SIGNAL → SCORE → ROUTE -->
+    <div class="card">
+      <h2>Live: Signal → Claude Score → Route</h2>
+      <div class="cap">n8n ingests buyer signals; Claude scores ICP fit &amp; intent, then routes to the right stream. No human touches a lead until it's qualified.</div>
+      <div class="feed" id="feed"></div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="card" style="margin-bottom:18px">
+    <h2>Pipeline by Revenue Stream</h2>
+    <div class="cap">One board, three streams, every deal stage-scored automatically. This is the "Pipeline of Command WALL" — live.</div>
+    <div class="pipe">
+      <div class="col">
+        <h3 style="color:var(--neon)">① Workshops <span class="tag">Discovery</span></h3>
+        <div class="ct">Land low-risk, qualify fast</div>
+        <div class="deal"><div class="n">Meridian Logistics (Xero)</div><div class="v">£1,000 · F2F · founder-led</div><div class="bar"><i style="width:85%"></i></div></div>
+        <div class="deal"><div class="n">Bramley &amp; Co Accountants</div><div class="v">£750 · online · 5 seats</div><div class="bar"><i style="width:70%"></i></div></div>
+        <div class="deal"><div class="n">Halcyon Care Group</div><div class="v">£750 · online</div><div class="bar"><i style="width:40%"></i></div></div>
+      </div>
+      <div class="col">
+        <h3 style="color:var(--neon2)">② SI &amp; Managed Services <span class="tag">Expand</span></h3>
+        <div class="ct">Auto-proposed from Pain Map</div>
+        <div class="deal"><div class="n">Meridian Logistics</div><div class="v">£8,500 SI · Claude Code workflows</div><div class="bar"><i style="width:55%"></i></div></div>
+        <div class="deal"><div class="n">Northgate Retail</div><div class="v">£4,200 managed services /mo</div><div class="bar"><i style="width:35%"></i></div></div>
+      </div>
+      <div class="col">
+        <h3 style="color:var(--green)">③ Command WALL <span class="tag">Recurring</span></h3>
+        <div class="ct">Quick-win → upsell → MRR</div>
+        <div class="deal"><div class="n">Bramley &amp; Co — Finance WALL</div><div class="v">£2,000 + £350/mo · 2-wk deploy</div><div class="bar"><i style="width:75%"></i></div></div>
+        <div class="deal"><div class="n">Meridian — Operation WALL</div><div class="v">£14,000 + £500/mo · upsell</div><div class="bar"><i style="width:30%"></i></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAUDE PERSONALIZATION + UNIT ECONOMICS -->
+  <div class="grid">
+    <div class="card">
+      <h2>Claude-generated outreach <span style="color:var(--mut);font-weight:400;font-size:11px">(per-signal, not per-template)</span></h2>
+      <div class="cap">Each draft is grounded in the specific signal that triggered it — no spray-and-pray. Reviewed in a human-in-the-loop gate before send.</div>
+      <div class="draft" id="draft">
+        <div class="meta">To: Sarah Whitfield, MD · Meridian Logistics · Signal: hiring "Finance Operations Manager" + Xero detected</div>
+        Hi Sarah — saw Meridian is hiring a Finance Ops Manager while running on <span class="hl">Xero</span>. Usually that means month-end is being held together by spreadsheets and one heroic person.<br><br>
+        We run a 5-hour, founder-led workshop that maps exactly where your finance &amp; ops workflows leak time — most teams walk out with 3 automations they can ship that week. If it's useful, the same workflow data plugs straight into a <span class="hl">Finance WALL</span> (14 KPIs, live in 2 weeks).<br><br>
+        Worth a 5-hour session with your leadership team? £1,000, on-site.
+      </div>
+      <button class="btn" onclick="regen()">↻ Regenerate from a different signal</button>
+    </div>
+    <div class="card">
+      <h2>Unit economics — the GTM Engineer's job</h2>
+      <div class="cap">A self-driving engine only wins if cost-per-qualified-lead falls while pipeline rises. This is the board metric.</div>
+      <div class="flex" style="margin-top:8px">
+        <div class="kpi" style="margin:0"><div class="lbl">Cost / qualified lead</div><div class="val" style="color:var(--green)">£11</div><div class="delta">▼ 84% vs manual SDR</div></div>
+        <div class="kpi alt" style="margin:0"><div class="lbl">Workshop → SI rate</div><div class="val">38%</div><div class="delta">▲ Pain Map effect</div></div>
+      </div>
+      <div class="flex" style="margin-top:14px">
+        <div class="kpi alt2" style="margin:0"><div class="lbl">Workshop → WALL rate</div><div class="val">24%</div><div class="delta">▲ land &amp; expand</div></div>
+        <div class="kpi" style="margin:0"><div class="lbl">Day-60 forecast MRR</div><div class="val" style="color:var(--green)">£6.3k</div><div class="delta">▲ 18 Finance WALLs</div></div>
+      </div>
+      <div class="draft" style="margin-top:14px;font-size:11.5px;color:var(--mut)">
+        Same discipline I used at Zingly to cut LLM cost ~6× (GPT-4o → 4.1-mini, $0.33 → $0.05/call) applied to pipeline: <span class="hl">cheap models score &amp; draft, the expensive model only finalizes.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>NEON AI Ltd · Command WALL: Revenue — a working thin-slice of the GTM engine. Built with n8n + Claude Code. Demo data; architecture is real.</footer>
+</div>
+
+<script>
+// ---- live counters ----
+const targets={k1:1284,k2:213,k3:41,k4:148500,k5:6300};
+const fmt=(id,v)=> id==='k4'||id==='k5' ? '£'+v.toLocaleString() : v.toLocaleString();
+Object.keys(targets).forEach(id=>{
+  let cur=0,end=targets[id],step=end/60,el=document.getElementById(id);
+  let t=setInterval(()=>{cur+=step; if(cur>=end){cur=end;clearInterval(t);} el.textContent=fmt(id,Math.round(cur));},22);
+});
+
+// ---- live signal feed ----
+const signals=[
+ {co:'Meridian Logistics',sig:'Hiring "Finance Ops Manager" · Xero detected',score:92,route:'→ Workshop (F2F) → Finance WALL'},
+ {co:'Bramley & Co Accountants',sig:'Sage user · 12 staff · growth post on LinkedIn',score:88,route:'→ Workshop (online) → Finance WALL'},
+ {co:'Northgate Retail',sig:'QuickBooks · 3 manual reconciliation roles',score:81,route:'→ SI & Managed Services'},
+ {co:'Halcyon Care Group',sig:'Tally · multi-site · ops complexity',score:74,route:'→ Workshop → Operation WALL'},
+ {co:'Pinnacle Surveyors',sig:'Recently funded · scaling headcount',score:69,route:'→ Workshop (online)'},
+ {co:'Oakwell Manufacturing',sig:'Sage + spreadsheet KPIs · 14 KPIs fit',score:90,route:'→ Finance WALL fast-track'},
+ {co:'Riverside Dental Group',sig:'Multi-clinic · no central ops view',score:66,route:'→ Workshop → Operation WALL'},
+ {co:'Lumen Marketing',sig:'QuickBooks · founder-led · 8 staff',score:58,route:'→ Nurture (low ICP fit)'},
+ {co:'Castleford Foods',sig:'Xero · expanding 2nd site',score:79,route:'→ Workshop (F2F)'},
+ {co:'Verde Energy Ltd',sig:'Hiring RevOps · Sage · 30 staff',score:85,route:'→ SI → Command WALL'},
+];
+const feed=document.getElementById('feed');
+let si=0;
+function cls(s){return s>=80?'s-hi':s>=65?'s-md':'s-lo';}
+function addSignal(){
+  const s=signals[si%signals.length]; si++;
+  const row=document.createElement('div'); row.className='row';
+  row.innerHTML=`<div><div class="co">${s.co}</div><div class="sig">${s.sig}</div><div class="route">${s.route}</div></div>
+    <div class="score ${cls(s.score)}">${s.score}</div>`;
+  feed.prepend(row);
+  while(feed.children.length>5) feed.removeChild(feed.lastChild);
+}
+addSignal();addSignal();addSignal();
+let feedTimer=setInterval(addSignal,2600);
+let feedOn=true;
+
+// ---- welcome splash ----
+function enterApp(){
+  document.getElementById('splash').classList.add('gone');
+  startClock();
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && !document.getElementById('splash').classList.contains('gone')) enterApp();
+});
+
+// ---- toast ----
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ---- pause / resume engine ----
+function toggleFeed(){
+  const b=document.getElementById('btnFeed');
+  if(feedOn){clearInterval(feedTimer); feedOn=false; b.textContent='▶ Resume engine'; b.classList.remove('on'); toast('Engine paused');}
+  else{feedTimer=setInterval(addSignal,2600); feedOn=true; b.textContent='⏸ Pause engine'; b.classList.add('on'); toast('Engine resumed — signals streaming');}
+}
+
+// ---- hot-lead scenario (a perfect-fit signal lands) ----
+function runScenario(){
+  const hot={co:'Apex Wholesale Ltd',sig:'🔥 Hiring Finance Ops + RevOps · Xero · just raised £1.2M',score:97,route:'→ PRIORITY Workshop (F2F) → Finance WALL fast-track'};
+  const row=document.createElement('div'); row.className='row';
+  row.style.borderColor='var(--green)'; row.style.boxShadow='0 0 18px rgba(31,224,134,.25)';
+  row.innerHTML=`<div><div class="co">${hot.co}</div><div class="sig">${hot.sig}</div><div class="route">${hot.route}</div></div>
+    <div class="score s-hi">${hot.score}</div>`;
+  feed.prepend(row); while(feed.children.length>5) feed.removeChild(feed.lastChild);
+  document.getElementById('k2').textContent=(parseInt(document.getElementById('k2').textContent.replace(/,/g,''))+1).toLocaleString();
+  toast('🔥 Hot lead scored 97 — routed & queued for outreach');
+}
+
+// ---- simulate a week of engine activity ----
+function boostKpis(){
+  bump('k1',180,''); bump('k2',34,''); bump('k3',6,''); bump('k4',24000,'£'); bump('k5',1050,'£');
+  toast('📈 Simulated +1 week: pipeline & MRR updated');
+}
+function bump(id,add,pre){
+  const el=document.getElementById(id);
+  let cur=parseInt(el.textContent.replace(/[£,]/g,''))||0; const end=cur+add;
+  const step=add/30; const t=setInterval(()=>{cur+=step; if(cur>=end){cur=end;clearInterval(t);}
+    el.textContent=pre+Math.round(cur).toLocaleString();},20);
+}
+
+// ---- engine uptime clock ----
+let secs=0;
+function startClock(){
+  setInterval(()=>{secs++; const h=String(Math.floor(secs/3600)).padStart(2,'0');
+    const m=String(Math.floor(secs%3600/60)).padStart(2,'0'); const s=String(secs%60).padStart(2,'0');
+    document.getElementById('clock').textContent=`${h}:${m}:${s}`;},1000);
+}
+
+// ---- claude regen demo ----
+const drafts=[
+ {meta:'To: Sarah Whitfield, MD · Meridian Logistics · Signal: hiring "Finance Operations Manager" + Xero',
+  body:`Hi Sarah — saw Meridian is hiring a Finance Ops Manager while running on <span class="hl">Xero</span>. Usually that means month-end is held together by spreadsheets and one heroic person.<br><br>We run a 5-hour, founder-led workshop that maps where your finance &amp; ops workflows leak time — most teams leave with 3 automations they can ship that week. The same data plugs into a <span class="hl">Finance WALL</span> (14 KPIs, live in 2 weeks).<br><br>Worth a 5-hour session with your leadership? £1,000, on-site.`},
+ {meta:'To: James Okafor, Founder · Oakwell Manufacturing · Signal: Sage + manual KPI spreadsheets',
+  body:`Hi James — noticed Oakwell tracks KPIs in spreadsheets on top of <span class="hl">Sage</span>. That's the exact gap our <span class="hl">Finance WALL</span> closes: 14 live KPIs, deployed in 2 weeks, £2,000 + £350/mo.<br><br>Before that, a £750 online workshop with 5 of your team will map which numbers actually drive decisions — so the WALL ships pre-tuned to how you run the business.<br><br>Open to a session next week?`},
+ {meta:'To: Priya Nair, COO · Verde Energy · Signal: hiring RevOps + Sage, 30 staff',
+  body:`Hi Priya — a RevOps hire at 30 staff on <span class="hl">Sage</span> usually signals you've outgrown manual reporting. Before you add headcount, our workshop maps what can be <span class="hl">automated with Claude Code</span> vs. what needs a person.<br><br>Several clients turned that map into an SI engagement that paid for the hire they were about to make. Worth 5 hours with your leadership team?`},
+];
+let di=0;
+function regen(){
+  di=(di+1)%drafts.length; const d=drafts[di];
+  document.getElementById('draft').innerHTML=`<div class="meta">${d.meta}</div>${d.body}`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Render Blueprint — Neon GTM Command WALL demo
+# Static site: no build step, just serves index.html.
+# Deploy by pushing this folder to GitHub, then New + → Blueprint → pick the repo.
+services:
+  - type: web
+    name: neon-gtm-command-wall
+    runtime: static
+    buildCommand: ""
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
