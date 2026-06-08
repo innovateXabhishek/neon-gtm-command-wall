@@ -9,5 +9,7 @@ services:
     buildCommand: npm install
     startCommand: node server.js
     envVars:
-      - key: ANTHROPIC_API_KEY
+      - key: XAI_API_KEY
         sync: false   # set this in the Render dashboard — never commit the key
+      - key: XAI_MODEL
+        value: grok-3-mini   # override if your account doesn't have this model

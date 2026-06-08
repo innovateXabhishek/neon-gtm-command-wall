@@ -293,8 +293,8 @@
 
   <!-- LIVE CLAUDE SCORING -->
   <div class="card" style="margin-bottom:18px">
-    <h2>🔴 Live: score a real company with Claude <span id="liveStatus" style="color:var(--green);font-size:11px;font-weight:600">● connected</span></h2>
-    <div class="cap">Not a mockup — this calls <b>Claude live</b> through a secure backend (the API key stays server-side, never in this page). Type a company and the buyer signal you found; Claude scores ICP + intent, routes it, and drafts grounded outreach — on the cheap Haiku model, the same cost discipline as the rest of the engine.</div>
+    <h2>🔴 Live: score a real company with AI <span id="liveStatus" style="color:var(--green);font-size:11px;font-weight:600">● connected</span></h2>
+    <div class="cap">Not a mockup — this calls a <b>live LLM</b> through a secure backend (the API key stays server-side, never in this page). The engine is <b>LLM-agnostic</b>: demoing on xAI Grok here, runs on Claude / Claude Code in production. Type a company and the buyer signal you found; the model scores ICP + intent, routes it, and drafts grounded outreach — on a cheap model tier, the same cost discipline as the rest of the engine.</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
       <input id="liveCo" placeholder="Company — e.g. Oakwell Manufacturing" style="flex:1;min-width:200px;background:var(--bg);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:10px;font-size:13px;outline:none">
       <input id="liveSig" placeholder="Signal — e.g. Sage user, hiring Finance Ops, 30 staff" style="flex:2;min-width:260px;background:var(--bg);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:10px;font-size:13px;outline:none">
@@ -303,7 +303,7 @@
     <div id="liveOut"></div>
   </div>
 
-  <footer>NEON AI Ltd · Command WALL: Revenue — a working thin-slice of the GTM engine. Built with n8n + Claude Code. Pipeline data is illustrative; the live Claude scoring above is real.</footer>
+  <footer>NEON AI Ltd · Command WALL: Revenue — a working thin-slice of the GTM engine. Built with n8n + Claude Code. Pipeline data is illustrative; the live AI scoring above is real.</footer>
 </div>
 
 <script>
@@ -420,7 +420,7 @@ async function scoreLive(){
   const out=document.getElementById('liveOut');
   const btn=document.getElementById('liveBtn');
   if(!co){toast('Enter a company name first');return;}
-  btn.textContent='⏳ Claude is scoring…'; btn.disabled=true; out.innerHTML='';
+  btn.textContent='⏳ Scoring live…'; btn.disabled=true; out.innerHTML='';
   try{
     const r=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({company:co,signal:sig})});
@@ -436,9 +436,9 @@ async function scoreLive(){
         <div class="route">→ ${stream} · intent ${d.intent_score}</div></div>
       </div>
       <div style="font-size:12px;color:var(--mut);margin-bottom:11px"><b style="color:var(--txt)">Why:</b> ${d.reason}</div>
-      <div class="meta">⚡ Claude-drafted outreach (live)</div>${(d.outreach||'').replace(/\n/g,'<br>')}
+      <div class="meta">⚡ AI-drafted outreach (live)</div>${(d.outreach||'').replace(/\n/g,'<br>')}
     </div>`;
-    toast('✅ Scored live by Claude');
+    toast('✅ Scored live by the model');
   }catch(e){
     document.getElementById('liveStatus').innerHTML='● offline';
     document.getElementById('liveStatus').style.color='var(--amber)';
